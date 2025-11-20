@@ -20,26 +20,15 @@
             return null;
         }
         
-        // Prévisualiser la vidéo YouTube lors de la saisie de l'ID
+        // Extraire l'ID YouTube lors de la saisie (sans prévisualisation auto)
         $('#video_id, #edit_video_id_field').on('input', function() {
             const input = $(this);
             const videoIdOrUrl = input.val().trim();
             const videoId = extractYoutubeId(videoIdOrUrl);
-            
+
             if (videoId) {
                 // Mettre à jour l'input avec seulement l'ID
                 input.val(videoId);
-                
-                // Trouver le conteneur de prévisualisation
-                const preview = input.closest('.ctab-yt-form-field').find('.ctab-yt-thumbnail-preview');
-                const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-                
-                // Afficher la prévisualisation
-                preview.html(`<img src="${thumbnailUrl}" alt="Miniature vidéo">`).addClass('show');
-            } else {
-                // Cacher la prévisualisation si l'ID n'est pas valide
-                const preview = input.closest('.ctab-yt-form-field').find('.ctab-yt-thumbnail-preview');
-                preview.removeClass('show');
             }
         });
         
@@ -137,21 +126,14 @@
             const videoId = $(this).data('video-id');
             const description = $(this).data('description');
             const order = $(this).data('order');
-            
+
             // Remplir le formulaire d'édition
             $('#edit_video_id').val(id);
             $('#edit_title').val(title);
             $('#edit_video_id_field').val(videoId);
             $('#edit_description').val(description);
             $('#edit_display_order').val(order);
-            
-            // Afficher la prévisualisation de la vidéo
-            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-            $('#edit_video_id_field').closest('.ctab-yt-form-field')
-                .find('.ctab-yt-thumbnail-preview')
-                .html(`<img src="${thumbnailUrl}" alt="Miniature vidéo">`)
-                .addClass('show');
-            
+
             // Afficher le modal
             $('#ctab-yt-edit-modal').css('display', 'block');
         });
@@ -211,18 +193,7 @@
         $('.ctab-yt-modal-content').on('click', function(e) {
             e.stopPropagation();
         });
-        
-        // Amélioration UX: Afficher un indicateur de chargement lors de la prévisualisation
-        $('#video_id, #edit_video_id_field').on('input', function() {
-            const input = $(this);
-            const preview = input.closest('.ctab-yt-form-field').find('.ctab-yt-thumbnail-preview');
-            
-            // Ajouter un indicateur de chargement temporaire
-            if (input.val().trim().length > 5) {
-                preview.html('<div style="text-align: center; padding: 20px;">Chargement de la miniature...</div>').addClass('show');
-            }
-        });
-        
+
     });
     
 })(jQuery);
