@@ -57,17 +57,16 @@
                         <div class="ctab-yt-video-id-help">
                             <strong>Astuce:</strong> Vous pouvez coller l'URL complète de la vidéo YouTube, l'ID sera extrait automatiquement. Par exemple: <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code>
                         </div>
-                        <div class="ctab-yt-thumbnail-preview"></div>
                     </div>
-                    
+
                     <div class="ctab-yt-form-field">
-                        <label for="custom_thumbnail">Miniature personnalisée (optionnel):</label>
+                        <label for="custom_thumbnail">Image miniature (obligatoire):</label>
                         <div class="ctab-yt-image-upload">
-                            <input type="text" id="custom_thumbnail" name="custom_thumbnail" placeholder="URL de l'image ou cliquez sur 'Choisir une image'">
+                            <input type="text" id="custom_thumbnail" name="custom_thumbnail" required placeholder="Cliquez sur 'Choisir une image' pour uploader">
                             <button type="button" class="button ctab-yt-upload-thumbnail">Choisir une image</button>
                         </div>
                         <small style="color: #6b7280; display: block; margin-top: 5px;">
-                            <strong>Recommandé:</strong> Uploadez votre propre image si la miniature YouTube ne s'affiche pas correctement. Format conseillé: 1280x720px (16:9)
+                            <strong>Obligatoire:</strong> Vous devez uploader une image miniature. Format conseillé: 1280x720px (16:9)
                         </small>
                         <div class="ctab-yt-custom-thumbnail-preview"></div>
                     </div>
@@ -168,17 +167,16 @@
                     <div class="ctab-yt-form-field">
                         <label for="edit_video_id_field">ID ou URL YouTube:</label>
                         <input type="text" id="edit_video_id_field" name="video_id_field" required>
-                        <div class="ctab-yt-thumbnail-preview"></div>
                     </div>
-                    
+
                     <div class="ctab-yt-form-field">
-                        <label for="edit_custom_thumbnail">Miniature personnalisée (optionnel):</label>
+                        <label for="edit_custom_thumbnail">Image miniature (obligatoire):</label>
                         <div class="ctab-yt-image-upload">
-                            <input type="text" id="edit_custom_thumbnail" name="custom_thumbnail" placeholder="URL de l'image ou cliquez sur 'Choisir une image'">
+                            <input type="text" id="edit_custom_thumbnail" name="custom_thumbnail" required placeholder="Cliquez sur 'Choisir une image' pour uploader">
                             <button type="button" class="button ctab-yt-upload-thumbnail-edit">Choisir une image</button>
                         </div>
                         <small style="color: #6b7280; display: block; margin-top: 5px;">
-                            <strong>Recommandé:</strong> Uploadez votre propre image si la miniature YouTube ne s'affiche pas. Format: 1280x720px (16:9)
+                            <strong>Obligatoire:</strong> Vous devez uploader une image miniature. Format: 1280x720px (16:9)
                         </small>
                         <div class="ctab-yt-custom-thumbnail-preview"></div>
                     </div>

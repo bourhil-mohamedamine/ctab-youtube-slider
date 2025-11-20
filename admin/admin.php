@@ -49,22 +49,25 @@ function ctab_youtube_slider_admin_page() {
         $video_id = sanitize_text_field($_POST['video_id']);
         $description = sanitize_textarea_field($_POST['description']);
         $display_order = intval($_POST['display_order']);
-        
-        // Générer l'URL de la miniature
-        $thumbnail_url = "https://img.youtube.com/vi/{$video_id}/maxresdefault.jpg";
-        
-        $wpdb->insert(
-            $table_name,
-            array(
-                'title' => $title,
-                'video_id' => $video_id,
-                'thumbnail_url' => $thumbnail_url,
-                'description' => $description,
-                'display_order' => $display_order,
-            )
-        );
-        
-        echo '<div class="notice notice-success is-dismissible"><p>Vidéo ajoutée avec succès!</p></div>';
+        $thumbnail_url = sanitize_text_field($_POST['custom_thumbnail']);
+
+        // Vérifier que la miniature a bien été uploadée
+        if (empty($thumbnail_url)) {
+            echo '<div class="notice notice-error is-dismissible"><p>Erreur: Vous devez uploader une image miniature!</p></div>';
+        } else {
+            $wpdb->insert(
+                $table_name,
+                array(
+                    'title' => $title,
+                    'video_id' => $video_id,
+                    'thumbnail_url' => $thumbnail_url,
+                    'description' => $description,
+                    'display_order' => $display_order,
+                )
+            );
+
+            echo '<div class="notice notice-success is-dismissible"><p>Vidéo ajoutée avec succès!</p></div>';
+        }
     }
     
     if (isset($_POST['ctab_youtube_action']) && $_POST['ctab_youtube_action'] == 'edit' && check_admin_referer('ctab_youtube_slider_edit_video')) {
@@ -74,23 +77,26 @@ function ctab_youtube_slider_admin_page() {
         $video_id = sanitize_text_field($_POST['video_id_field']);
         $description = sanitize_textarea_field($_POST['description']);
         $display_order = intval($_POST['display_order']);
-        
-        // Générer l'URL de la miniature
-        $thumbnail_url = "https://img.youtube.com/vi/{$video_id}/maxresdefault.jpg";
-        
-        $wpdb->update(
-            $table_name,
-            array(
-                'title' => $title,
-                'video_id' => $video_id,
-                'thumbnail_url' => $thumbnail_url,
-                'description' => $description,
-                'display_order' => $display_order,
-            ),
-            array('id' => $id)
-        );
-        
-        echo '<div class="notice notice-success is-dismissible"><p>Vidéo mise à jour avec succès!</p></div>';
+        $thumbnail_url = sanitize_text_field($_POST['custom_thumbnail']);
+
+        // Vérifier que la miniature a bien été uploadée
+        if (empty($thumbnail_url)) {
+            echo '<div class="notice notice-error is-dismissible"><p>Erreur: Vous devez uploader une image miniature!</p></div>';
+        } else {
+            $wpdb->update(
+                $table_name,
+                array(
+                    'title' => $title,
+                    'video_id' => $video_id,
+                    'thumbnail_url' => $thumbnail_url,
+                    'description' => $description,
+                    'display_order' => $display_order,
+                ),
+                array('id' => $id)
+            );
+
+            echo '<div class="notice notice-success is-dismissible"><p>Vidéo mise à jour avec succès!</p></div>';
+        }
     }
     
     if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['video_id']) && check_admin_referer('delete_video_' . $_GET['video_id'])) {
@@ -113,18 +119,21 @@ function ctab_youtube_slider_admin_page() {
 }
 
 // AJAX: Extraire les informations de la vidéo YouTube
+// Fonction désactivée - L'upload manuel de miniature est maintenant obligatoire
+/*
 add_action('wp_ajax_ctab_get_youtube_info', 'ctab_get_youtube_info');
 function ctab_get_youtube_info() {
     check_ajax_referer('ctab_youtube_slider_nonce', 'nonce');
-    
+
     $video_id = sanitize_text_field($_POST['video_id']);
-    
+
     // Générer l'URL de la miniature
     $thumbnail_url = "https://img.youtube.com/vi/{$video_id}/maxresdefault.jpg";
-    
+
     wp_send_json_success(array(
         'thumbnail_url' => $thumbnail_url,
         'video_id' => $video_id
     ));
 }
+*/
 ?>
