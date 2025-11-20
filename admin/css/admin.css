@@ -256,6 +256,7 @@
 
 .ctab-yt-video-thumb {
     flex: 0 0 200px;
+    height: 112px;
     position: relative;
     border-radius: 8px;
     overflow: hidden;
@@ -263,8 +264,9 @@
 
 .ctab-yt-video-thumb img {
     width: 100%;
-    height: 112px;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
 }
 
@@ -308,6 +310,11 @@
     margin-bottom: 15px;
     font-size: 14px;
     line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ctab-yt-video-actions {
@@ -338,11 +345,14 @@
 .ctab-yt-btn-delete {
     background: #ef4444;
     color: white;
+    text-decoration: none;
 }
 
 .ctab-yt-btn-delete:hover {
     background: #dc2626;
     transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
 }
 
 .ctab-yt-btn-primary {
@@ -481,14 +491,15 @@
     .ctab-yt-video-item {
         flex-direction: column;
     }
-    
+
     .ctab-yt-video-thumb {
         flex: 1;
         width: 100%;
-    }
-    
-    .ctab-yt-video-thumb img {
         height: 200px;
+    }
+
+    .ctab-yt-video-thumb img {
+        height: 100%;
     }
     
     .ctab-yt-modal-content {

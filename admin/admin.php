@@ -45,11 +45,11 @@ function ctab_youtube_slider_admin_page() {
     // Traiter les actions
     if (isset($_POST['ctab_youtube_action']) && $_POST['ctab_youtube_action'] == 'add' && check_admin_referer('ctab_youtube_slider_add_video')) {
         // Ajouter une nouvelle vidéo
-        $title = sanitize_text_field($_POST['title']);
-        $video_id = sanitize_text_field($_POST['video_id']);
-        $description = sanitize_textarea_field($_POST['description']);
+        $title = sanitize_text_field(wp_unslash($_POST['title']));
+        $video_id = sanitize_text_field(wp_unslash($_POST['video_id']));
+        $description = sanitize_textarea_field(wp_unslash($_POST['description']));
         $display_order = intval($_POST['display_order']);
-        $thumbnail_url = sanitize_text_field($_POST['custom_thumbnail']);
+        $thumbnail_url = sanitize_text_field(wp_unslash($_POST['custom_thumbnail']));
 
         // Vérifier que la miniature a bien été uploadée
         if (empty($thumbnail_url)) {
@@ -73,11 +73,11 @@ function ctab_youtube_slider_admin_page() {
     if (isset($_POST['ctab_youtube_action']) && $_POST['ctab_youtube_action'] == 'edit' && check_admin_referer('ctab_youtube_slider_edit_video')) {
         // Modifier une vidéo existante
         $id = intval($_POST['video_id']);
-        $title = sanitize_text_field($_POST['title']);
-        $video_id = sanitize_text_field($_POST['video_id_field']);
-        $description = sanitize_textarea_field($_POST['description']);
+        $title = sanitize_text_field(wp_unslash($_POST['title']));
+        $video_id = sanitize_text_field(wp_unslash($_POST['video_id_field']));
+        $description = sanitize_textarea_field(wp_unslash($_POST['description']));
         $display_order = intval($_POST['display_order']);
-        $thumbnail_url = sanitize_text_field($_POST['custom_thumbnail']);
+        $thumbnail_url = sanitize_text_field(wp_unslash($_POST['custom_thumbnail']));
 
         // Vérifier que la miniature a bien été uploadée
         if (empty($thumbnail_url)) {
