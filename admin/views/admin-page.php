@@ -125,12 +125,13 @@
                                 </div>
                                 <p class="ctab-yt-video-description"><?php echo esc_html($video->description); ?></p>
                                 <div class="ctab-yt-video-actions">
-                                    <button type="button" class="ctab-yt-btn ctab-yt-btn-edit ctab-yt-edit-video" 
+                                    <button type="button" class="ctab-yt-btn ctab-yt-btn-edit ctab-yt-edit-video"
                                         data-id="<?php echo $video->id; ?>"
                                         data-title="<?php echo esc_attr($video->title); ?>"
                                         data-video-id="<?php echo esc_attr($video->video_id); ?>"
                                         data-description="<?php echo esc_attr($video->description); ?>"
-                                        data-order="<?php echo esc_attr($video->display_order); ?>">
+                                        data-order="<?php echo esc_attr($video->display_order); ?>"
+                                        data-thumbnail-url="<?php echo esc_attr($video->thumbnail_url); ?>">
                                         Modifier
                                     </button>
                                     <a href="<?php echo wp_nonce_url(add_query_arg(array('action' => 'delete', 'video_id' => $video->id)), 'delete_video_' . $video->id); ?>" 

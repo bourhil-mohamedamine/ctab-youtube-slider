@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CTAB YouTube Slider
  * Description: Affiche un slider de vidéos YouTube élégant et personnalisable pour le CTAB.
- * Version: 1.3
+ * Version: 1.4
  * Author: CTAB
  * Text Domain: ctab-youtube-slider
  * Domain Path: /languages
@@ -13,7 +13,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-define('CTAB_YOUTUBE_SLIDER_VERSION', '1.3');
+define('CTAB_YOUTUBE_SLIDER_VERSION', '1.4');
 define('CTAB_YOUTUBE_SLIDER_PATH', plugin_dir_path(__FILE__));
 define('CTAB_YOUTUBE_SLIDER_URL', plugin_dir_url(__FILE__));
 

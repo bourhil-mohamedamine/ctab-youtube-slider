@@ -1,8 +1,34 @@
 (function($) {
     'use strict';
-    
+
     $(document).ready(function() {
-        
+
+        // Fonction pour afficher des notifications temporaires
+        function showNotification(message, type) {
+            // Supprimer les notifications existantes
+            $('.ctab-yt-notification').remove();
+
+            // Créer la notification
+            const notificationClass = type === 'error' ? 'ctab-yt-notification-error' : 'ctab-yt-notification-success';
+            const notification = $('<div class="ctab-yt-notification ' + notificationClass + '">' + message + '</div>');
+
+            // Ajouter au body
+            $('body').append(notification);
+
+            // Afficher avec animation
+            setTimeout(function() {
+                notification.addClass('show');
+            }, 100);
+
+            // Masquer après 4 secondes
+            setTimeout(function() {
+                notification.removeClass('show');
+                setTimeout(function() {
+                    notification.remove();
+                }, 300);
+            }, 4000);
+        }
+
         // Extraire l'ID YouTube d'une URL
         function extractYoutubeId(url) {
             const patterns = [
@@ -126,6 +152,7 @@
             const videoId = $(this).data('video-id');
             const description = $(this).data('description');
             const order = $(this).data('order');
+            const thumbnailUrl = $(this).data('thumbnail-url');
 
             // Remplir le formulaire d'édition
             $('#edit_video_id').val(id);
@@ -133,6 +160,15 @@
             $('#edit_video_id_field').val(videoId);
             $('#edit_description').val(description);
             $('#edit_display_order').val(order);
+            $('#edit_custom_thumbnail').val(thumbnailUrl);
+
+            // Afficher l'image miniature existante
+            const imagePreview = $('#edit_custom_thumbnail').parent().next().next('.ctab-yt-custom-thumbnail-preview');
+            if (thumbnailUrl) {
+                imagePreview.html('<div style="position: relative;"><img src="' + thumbnailUrl + '" alt="Miniature actuelle" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;"><div style="text-align: center; margin-top: 5px; color: #6b7280; font-size: 12px;">Image actuelle (cliquez sur "Choisir une image" pour modifier)</div></div>');
+            } else {
+                imagePreview.html('');
+            }
 
             // Afficher le modal
             $('#ctab-yt-edit-modal').css('display', 'block');
@@ -160,17 +196,45 @@
         // Validation du formulaire
         $('form').on('submit', function(e) {
             const form = $(this);
+            const titleInput = form.find('input[name="title"]');
             const videoIdInput = form.find('input[name="video_id"], input[name="video_id_field"]');
+            const thumbnailInput = form.find('input[name="custom_thumbnail"]');
+            const descriptionInput = form.find('textarea[name="description"]');
+
+            // Validation du titre
+            if (!titleInput.val().trim()) {
+                e.preventDefault();
+                showNotification('⚠️ Le titre de la vidéo est obligatoire!', 'error');
+                titleInput.focus();
+                return false;
+            }
+
+            // Validation de l'ID YouTube
             const videoIdOrUrl = videoIdInput.val().trim();
             const videoId = extractYoutubeId(videoIdOrUrl);
-            
+
             if (!videoId) {
                 e.preventDefault();
-                alert('Veuillez entrer un ID YouTube valide ou une URL YouTube complète.');
+                showNotification('⚠️ Veuillez entrer un ID YouTube valide ou une URL YouTube complète!', 'error');
                 videoIdInput.focus();
                 return false;
             }
-            
+
+            // Validation de la miniature
+            if (!thumbnailInput.val().trim()) {
+                e.preventDefault();
+                showNotification('⚠️ Vous devez uploader une image miniature!', 'error');
+                return false;
+            }
+
+            // Validation de la description
+            if (!descriptionInput.val().trim()) {
+                e.preventDefault();
+                showNotification('⚠️ La description de la vidéo est obligatoire!', 'error');
+                descriptionInput.focus();
+                return false;
+            }
+
             // S'assurer que seul l'ID est envoyé
             videoIdInput.val(videoId);
         });
@@ -181,14 +245,7 @@
         }).on('mouseleave', function() {
             $(this).css('transform', 'translateY(0)');
         });
-        
-        // Auto-focus sur le premier champ lors de l'ouverture du modal
-        $('#ctab-yt-edit-modal').on('transitionend', function() {
-            if ($(this).css('display') === 'block') {
-                $('#edit_title').focus();
-            }
-        });
-        
+
         // Empêcher la fermeture du modal lors du clic sur le contenu
         $('.ctab-yt-modal-content').on('click', function(e) {
             e.stopPropagation();
