@@ -256,6 +256,7 @@
 
 .ctab-yt-video-thumb {
     flex: 0 0 200px;
+    height: 112px;
     position: relative;
     border-radius: 8px;
     overflow: hidden;
@@ -263,8 +264,9 @@
 
 .ctab-yt-video-thumb img {
     width: 100%;
-    height: 112px;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
 }
 
@@ -308,6 +310,11 @@
     margin-bottom: 15px;
     font-size: 14px;
     line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ctab-yt-video-actions {
@@ -338,11 +345,14 @@
 .ctab-yt-btn-delete {
     background: #ef4444;
     color: white;
+    text-decoration: none;
 }
 
 .ctab-yt-btn-delete:hover {
     background: #dc2626;
     transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
 }
 
 .ctab-yt-btn-primary {
@@ -466,6 +476,39 @@
     margin: 0;
 }
 
+/* Notifications temporaires */
+.ctab-yt-notification {
+    position: fixed;
+    top: 32px;
+    right: 20px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    font-size: 14px;
+    z-index: 999999;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+.ctab-yt-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.ctab-yt-notification-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.ctab-yt-notification-error {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
     .ctab-yt-admin-container {
@@ -481,18 +524,26 @@
     .ctab-yt-video-item {
         flex-direction: column;
     }
-    
+
     .ctab-yt-video-thumb {
         flex: 1;
         width: 100%;
-    }
-    
-    .ctab-yt-video-thumb img {
         height: 200px;
     }
-    
+
+    .ctab-yt-video-thumb img {
+        height: 100%;
+    }
+
     .ctab-yt-modal-content {
         width: 95%;
         margin: 5% auto;
+    }
+
+    .ctab-yt-notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
     }
 }
